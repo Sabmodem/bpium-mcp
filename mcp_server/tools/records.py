@@ -43,7 +43,7 @@ async def get_record(
     """
     try:
         record = await client.records.get_record(
-            catalog_id=catalogId,
+            catalog_id=catalog_id,
             record_id=record_id, 
             fields=fields
         )

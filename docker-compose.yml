@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  mcp:
+    build: .
+    environment:
+      URL: ${URL}
+      LOGIN: ${LOGIN}
+      PASSWORD: ${PASSWORD}
+    ports:
+      - "8000:8000"
+    command: fastmcp run main.py --port 8000 --transport sse --host 0.0.0.0

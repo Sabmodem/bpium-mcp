@@ -20,7 +20,7 @@ class BpiumClient:
         self.client = httpx.AsyncClient(
             follow_redirects=True,
             headers=headers,
-            base_url=base_url
+            base_url=base_url,
         )
         self.catalogs = CatalogsResource(self.client, api_url)
         self.records = RecordsResource(self.client, api_url)
