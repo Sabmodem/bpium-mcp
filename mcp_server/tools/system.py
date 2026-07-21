@@ -3,6 +3,7 @@ from fastmcp.dependencies import Depends
 from api.client import BpiumClient
 from mcp_server.dependencies import get_bpium_client
 from fastmcp import FastMCP
+from api.exceptions import BpiumClientException
 import json
 
 @tool()

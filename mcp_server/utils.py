@@ -6,7 +6,6 @@ def sanitize_catalog_fields(raw_catalog: Dict[str, Any]) -> Dict[str, Any]:
     Оставляет только минимально необходимые данные о каталоге и его полях,
     экономя контекстное окно LLM.
     """
-    print(raw_catalog)
     raw_fields = raw_catalog.get("fields", [])
     clean_fields = []
 

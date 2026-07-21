@@ -1,10 +1,7 @@
 from api.exceptions import BpiumClientException
 from api.resources import (
     CatalogsResource,
-    FilesResource,
-    HistoriesResource,
     RecordsResource,
-    RelationsResource,
     SectionsResource,
     SystemResource
 )
@@ -26,13 +23,11 @@ class BpiumClient:
             base_url=base_url
         )
         self.catalogs = CatalogsResource(self.client, api_url)
-        self.files = FilesResource(self.client, api_url)
-        self.histories = HistoriesResource(self.client, api_url)
         self.records = RecordsResource(self.client, api_url)
-        self.relations = RelationsResource(self.client, api_url)
         self.sections = SectionsResource(self.client, api_url)
         self.system = SystemResource(self.client, api_url)
         self._is_closed = False
+        self.is_authorized = False
 
     async def __aenter__(self):
         """Вход в контекстный менеджер"""
@@ -49,22 +44,14 @@ class BpiumClient:
             self._is_closed = True
 
     async def login_post(self, email: str, password: str) -> httpx.Response:
+        if self.is_authorized == True:
+            return
         """
         Авторизация через POST-запрос на /auth/login.
         Сессионные Cookie (например, 'connect.sid') сохраняются внутри httpx.Client.
         """
         url = f"/auth/login"
-        payload = {"email": email, "password": password}
-        
-        # Временный сброс auth, если он был установлен ранее
-        old_auth = self.client.auth
-        self.client.auth = None
-        
-        try:
-            response = await self.client.post(url, json=payload)
-            check_response(response)
-            return response
-        finally:
-            # Возвращаем старую авторизацию, если POST-запрос упал, а она была настроена
-            if old_auth and not self.client.cookies:
-                self.client.auth = old_auth
+        payload = {"email": email, "password": password}                
+        response = await self.client.post(url, json=payload)
+        check_response(response)
+        return response
