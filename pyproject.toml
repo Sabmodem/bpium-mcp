@@ -1,0 +1,13 @@
+[project]
+name = "bpium"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "async-lru>=2.3.0",
+    "fastapi>=0.139.2",
+    "fastmcp>=3.4.4",
+    "httpx>=0.28.1",
+    "load-dotenv>=0.1.0",
+]
